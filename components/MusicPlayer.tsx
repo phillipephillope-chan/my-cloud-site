@@ -31,17 +31,19 @@ export default function MusicPlayer() {
   }
 
   return (
-    <div className="music-player">
+    <div className={`music-player ${isPlaying ? "music-playing" : ""}`}>
       <audio ref={audioRef} src="/bgm.mp3" loop preload="auto" />
 
       <button type="button" className="music-button" onClick={toggleMusic}>
-        {isPlaying ? "music on ♫꒰･‿･๑꒱" : "music off ♫꒰｡•́‿•̀｡꒱"}
+        <span className="music-note note-1">♪</span>
+        <span className="music-note note-2">♫</span>
+        <span className="music-label">
+          {isPlaying ? "music on ꒰･‿･๑꒱" : "music off ꒰｡•́‿•̀｡꒱"}
+        </span>
       </button>
 
       {hasError && (
-        <p className="music-error">
-          can’t play bgm.mp3 ꒰｡•́︿•̀｡꒱
-        </p>
+        <p className="music-error">can’t play bgm.mp3 ꒰｡•́︿•̀｡꒱</p>
       )}
     </div>
   );

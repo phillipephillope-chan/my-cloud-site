@@ -1,3 +1,4 @@
+import ReactiveTitle from "@/components/ReactiveTitle";
 import SkySparkles from "@/components/SkySparkles";
 import MusicPlayer from "@/components/MusicPlayer";
 import CustomCursor from "@/components/CustomCursor";
@@ -10,25 +11,7 @@ export default function Home() {
       <CustomCursor />
       <SkySparkles />
 
-      <h1 className="brand">
-        <span>P</span>
-        <span>H</span>
-        <span>I</span>
-        <span>L</span>
-        <span>L</span>
-        <span>I</span>
-        <span>P</span>
-        <span>E</span>
-        <span>&nbsp;</span>
-        <span>P</span>
-        <span>H</span>
-        <span>I</span>
-        <span>L</span>
-        <span>L</span>
-        <span>O</span>
-        <span>P</span>
-        <span>E</span>
-      </h1>
+      <ReactiveTitle />
 
       <ReactiveCloud className="cloud-left" />
       <ReactiveCloud className="cloud-top" />

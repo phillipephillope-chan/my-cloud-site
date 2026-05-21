@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 type ReactiveCloudProps = {
   className: string;
@@ -39,11 +39,8 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
       const cloudCenterX = rect.left + rect.width / 2;
       const cloudCenterY = rect.top + rect.height / 2;
 
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
-
-      const distanceX = mouseX - cloudCenterX;
-      const distanceY = mouseY - cloudCenterY;
+      const distanceX = event.clientX - cloudCenterX;
+      const distanceY = event.clientY - cloudCenterY;
 
       const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
       const reactionDistance = 260;
@@ -51,18 +48,12 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
       if (distance < reactionDistance) {
         const strength = (reactionDistance - distance) / reactionDistance;
 
-        const pushX = -distanceX * strength * 0.18;
-        const pushY = -distanceY * strength * 0.18;
-
         setOffset({
-          x: pushX,
-          y: pushY,
+          x: -distanceX * strength * 0.18,
+          y: -distanceY * strength * 0.18,
         });
       } else {
-        setOffset({
-          x: 0,
-          y: 0,
-        });
+        setOffset({ x: 0, y: 0 });
       }
     }
 
@@ -77,9 +68,7 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
     const now = Date.now();
 
     // 防止手机 touch + pointer 触发两次
-    if (now - lastTapTime.current < 120) {
-      return;
-    }
+    if (now - lastTapTime.current < 120) return;
 
     lastTapTime.current = now;
 
@@ -161,7 +150,7 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
               "--star-duration": `${star.duration}s`,
               "--star-drift": `${star.drift}px`,
               "--star-rotation": `${star.rotation}deg`,
-            } as React.CSSProperties
+            } as CSSProperties
           }
         />
       ))}
@@ -173,7 +162,7 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
           {
             "--push-x": `${offset.x}px`,
             "--push-y": `${offset.y}px`,
-          } as React.CSSProperties
+          } as CSSProperties
         }
       >
         <button

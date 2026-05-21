@@ -1,9 +1,11 @@
+import MusicPlayer from "@/components/MusicPlayer";
 import CustomCursor from "@/components/CustomCursor";
 import ReactiveCloud from "@/components/ReactiveCloud";
 
 export default function Home() {
   return (
     <main className="page">
+      <MusicPlayer />
       <CustomCursor />
 
       <h1 className="brand">

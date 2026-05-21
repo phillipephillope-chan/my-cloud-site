@@ -1,3 +1,4 @@
+import SkySparkles from "@/components/SkySparkles";
 import MusicPlayer from "@/components/MusicPlayer";
 import CustomCursor from "@/components/CustomCursor";
 import ReactiveCloud from "@/components/ReactiveCloud";
@@ -7,6 +8,7 @@ export default function Home() {
     <main className="page">
       <MusicPlayer />
       <CustomCursor />
+      <SkySparkles />
 
       <h1 className="brand">
         <span>P</span>

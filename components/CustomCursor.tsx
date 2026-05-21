@@ -13,11 +13,22 @@ export default function CustomCursor() {
   const [position, setPosition] = useState({ x: -100, y: -100 });
   const [isClicking, setIsClicking] = useState(false);
   const [lineTrail, setLineTrail] = useState<TrailPoint[]>([]);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const trailActiveUntil = useRef(0);
   const nextId = useRef(1);
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(hover: none), (pointer: coarse)");
+
+    function updateInputMode() {
+      setIsTouchDevice(mediaQuery.matches);
+    }
+
+    updateInputMode();
+
+    mediaQuery.addEventListener("change", updateInputMode);
+
     function handleMouseMove(event: MouseEvent) {
       const x = event.clientX;
       const y = event.clientY;
@@ -75,6 +86,7 @@ export default function CustomCursor() {
     window.addEventListener("mouseup", handleMouseUp);
 
     return () => {
+      mediaQuery.removeEventListener("change", updateInputMode);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
@@ -82,6 +94,9 @@ export default function CustomCursor() {
     };
   }, []);
 
+  if (isTouchDevice) {
+    return null;
+  }
   return (
     <>
       <svg className="plane-line-layer">

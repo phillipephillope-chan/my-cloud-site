@@ -23,6 +23,7 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
   const clickCount = useRef(0);
   const clickResetTimer = useRef<number | null>(null);
   const nextStarId = useRef(1);
+  const lastTapTime = useRef(0);
 
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [isPopping, setIsPopping] = useState(false);
@@ -72,7 +73,16 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
     };
   }, []);
 
-  function handleCloudClick() {
+  function handleCloudPress() {
+    const now = Date.now();
+
+    // 防止手机 touch + pointer 触发两次
+    if (now - lastTapTime.current < 120) {
+      return;
+    }
+
+    lastTapTime.current = now;
+
     setIsPopping(true);
 
     window.setTimeout(() => {
@@ -159,7 +169,6 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
       <div
         ref={cloudRef}
         className={`cloud-wrap ${className} ${isPopping ? "cloud-popping" : ""}`}
-        onClick={handleCloudClick}
         style={
           {
             "--push-x": `${offset.x}px`,
@@ -167,6 +176,20 @@ export default function ReactiveCloud({ className }: ReactiveCloudProps) {
           } as React.CSSProperties
         }
       >
+        <button
+          type="button"
+          className="cloud-hit-area"
+          aria-label="tap cloud"
+          onPointerDown={(event) => {
+            event.preventDefault();
+            handleCloudPress();
+          }}
+          onTouchStart={(event) => {
+            event.preventDefault();
+            handleCloudPress();
+          }}
+        />
+
         <div className="cloud-shape">
           <div className="cloud-pop-layer">
             <div className="facet f1" />

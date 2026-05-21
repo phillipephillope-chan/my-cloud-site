@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Phillipe & Phillope",
-  description: "✮ clouds and planes and stars ✮",
+  title: "PHILLIPE PHILLOPE",
+  description: "paper planes, clouds, and tiny stars",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
